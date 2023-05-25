@@ -1,0 +1,12 @@
+.navbar{
+    padding: 20px 0;
+}
+
+.logo-title{
+    display: flex;
+    align-items: center;
+    color:#fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 22px;
+}
