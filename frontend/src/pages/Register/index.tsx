@@ -1,21 +1,95 @@
-import { useState } from "react";
+import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 import Card from "../../components/Card";
-import StepAvatar from "../Steps/StepAvatar";
-import StepName from "../Steps/StepName";
-import StepOtp from "../Steps/StepOtp";
-import StepPhoneEmail from "../Steps/StepPhoneEmail";
-import StepUsername from "../Steps/StepUsername";
-import "./Register.css";
-const steps = [StepPhoneEmail, StepOtp, StepName, StepAvatar, StepUsername];
+import Authentication from "../../service/Authentication";
+import { registerInit } from "../../utils/init";
+import { registerSchema } from "../../utils/schema";
+
 const Register = () => {
-  const [step, setStep] = useState<number>(0);
-  const Step = steps[step];
-  const handleNavigation = () => {
-    if (step < 4) {
-      setStep((prev) => prev + 1);
-    }
-  };
-  return <Step onNext={handleNavigation} />;
+  const navigate = useNavigate();
+  const formik = useFormik({
+    initialValues: registerInit,
+    validationSchema: registerSchema,
+    onSubmit: async (values) => {
+      try {
+        const { confirmPassword, ...other } = values;
+        const res = await Authentication.register(other);
+        if (res) {
+          navigate("/lobby");
+        } else {
+          console.log("fail to create user");
+        }
+      } catch (err) {}
+    },
+  });
+  const { values, errors, handleChange, handleSubmit, handleBlur, touched } =
+    formik;
+
+  return (
+    <div className="cardWrapper">
+      <Card logo="email2.png" title="Login Using Your Email">
+        <form className="column-wrapper" onSubmit={handleSubmit}>
+          {touched.email && <p className="error">{errors.email}</p>}
+          <input
+            type="email"
+            className="inputText"
+            onBlur={handleBlur}
+            value={values.email}
+            name="email"
+            placeholder={"Email"}
+            onChange={handleChange}
+          />
+          {touched.name && <p className="error">{errors.name}</p>}
+          <input
+            type="text"
+            className="inputText"
+            onBlur={handleBlur}
+            value={values.name}
+            name="name"
+            placeholder={"Name"}
+            onChange={handleChange}
+          />
+          {touched.password && <p className="error">{errors.password}</p>}
+          <input
+            type="password"
+            className="inputText"
+            onBlur={handleBlur}
+            value={values.password}
+            name="password"
+            placeholder={"Password"}
+            onChange={handleChange}
+          />
+          {touched.confirmPassword && (
+            <p className="error">{errors.confirmPassword}</p>
+          )}
+          <input
+            type="password"
+            className="inputText"
+            onBlur={handleBlur}
+            value={values.confirmPassword}
+            name="confirmPassword"
+            placeholder={"Confirm Password"}
+            onChange={handleChange}
+          />
+          <button className="button" type="submit">
+            <span>{"Next"}&nbsp;</span>
+            <img src={`/images/arrow-forward.png`} alt="arrow" height="15" />
+          </button>
+        </form>
+        <div>
+          <p className="bottomParagraph">
+            Already have account?
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </span>
+          </p>
+        </div>
+      </Card>
+    </div>
+  );
 };
 
 export default Register;

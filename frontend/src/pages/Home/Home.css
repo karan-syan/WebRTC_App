@@ -1,13 +1,8 @@
-.heading-wrapper {
+.cardWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
-}
-
-.heading {
-  font-size: 22px;
-  font-weight: bold;
+  margin-top: 6rem;
 }
 
 .text {
@@ -16,14 +11,9 @@
   color: #c4c5c5;
   margin-bottom: 30px;
 }
-.sign-in-wrapper {
+.signInWrapper {
   margin-top: 20px;
 }
-.has-invite {
+.hasInvite {
   color: #0077ff;
-}
-.signin-link {
-  color: #0077ff;
-  text-decoration: none;
-  font-weight: 700;
 }

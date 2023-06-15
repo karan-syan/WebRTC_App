@@ -1,0 +1,20 @@
+.callBtn {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+}
+.remoteStreamBox {
+  display: inline-block;
+  height: 80vh;
+  width: 100%;
+  background-color: black;
+}
+.localStreamBox {
+  width: 160px;
+  height: 110px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1000;
+}
