@@ -12,7 +12,7 @@ const Lobby = () => {
   const navigate = useNavigate();
   const handleSubmit = useCallback(() => {
     socket?.emit("room:join", { roomNo, email: auth.currentUser?.email });
-  }, [roomNo, socket]);
+  }, [auth.currentUser?.email, roomNo, socket]);
 
   const handleJoinRoom = useCallback(
     (data: { roomNo: string; email: string }) => {
@@ -20,7 +20,7 @@ const Lobby = () => {
       console.log(data);
       navigate(`/room/${roomNo}`);
     },
-    [roomNo, socket]
+    [navigate]
   );
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Lobby = () => {
     return () => {
       socket?.off("room:join");
     };
-  }, [socket]);
+  }, [handleJoinRoom, socket]);
 
   return (
     <div className="cardWrapper">

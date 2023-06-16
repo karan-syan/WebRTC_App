@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSocket } from "../../context/SocketProvider";
 import ReactPlayer from "react-player";
-import Peer from "../../service/Peer";
+import { Peer } from "../../service/Peer";
 import "./Room.css";
 const Room = () => {
   const socket = useSocket();
@@ -95,7 +95,7 @@ const Room = () => {
       }
       setShowStreamBtn(false);
     },
-    [socket]
+    []
   );
 
   useEffect(() => {
